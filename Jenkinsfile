@@ -49,6 +49,26 @@ pipeline {
                      sh 'docker push ${reg_address}/${repo}:java_app-build-${BUILD_NUMBER}'
                  }
         }
+        stage('terraform format check') {
+            steps{
+                sh 'terraform fmt'
+            }
+        }
+        stage('terraform Init') {
+            steps{
+                sh 'terraform init'
+            }
+        }
+        stage('terraform apply') {
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
+        }
+        stage('terraform destroy'){
+            steps{
+                sh 'terraform destroy --auto-approve'
+            }
+        }      
 
     }
   
